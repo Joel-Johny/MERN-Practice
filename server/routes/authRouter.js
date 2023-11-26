@@ -1,13 +1,10 @@
 const express = require("express")
 const router = express.Router()
+const authController=require("../controllers/authController")
 
-router.get("/register",(req,res)=>{
-    res.send("Hello this is register page")
-})
-
-router.get("/login",(req,res)=>{
-    res.send("Hello this is login page from auth router")
-})
+router.get("/register",authController.register)
+router.get("/",authController.home)
+router.get("/login",authController.login)
 
 
 
