@@ -7,7 +7,8 @@ const authController ={
     },
     
     register : async (req,res)=>{
-        res.send("This is register page")
+        console.log(req.body)
+        res.send(req.body)
     },
 
 }
