@@ -1,4 +1,5 @@
 
+const User = require("../models/userModel")
 const userModel=require("../models/userModel")
 
 const authController ={
@@ -10,14 +11,24 @@ const authController ={
     },
     
     register : async (req,res)=>{
-        const {username , email , password ,phone}=req.body
 
-        const userExist = userModel.findOne({email:email})
+        try{
+            const {username , email , password ,phone}=req.body
 
-        if(userExist)
-            return  res.json({msg:"email exists already"})
+            // console.log(username , email , password ,phone)
+            const userExist = await userModel.findOne({email:email})
+            console.log(userExist)
+            if(userExist)
+               return res.json({msg:"email exists already"})
+            
+            await userModel.create({username,email,phone,password})
+            return res.json({msg:'user created successfully'})
+            
+        }catch(err){
+            console.log("ISE",err)
+            return "ISE"
+        }
 
-        
         
     },
 
