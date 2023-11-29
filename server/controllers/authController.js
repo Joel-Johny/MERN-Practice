@@ -1,3 +1,6 @@
+
+const userModel=require("../models/userModel")
+
 const authController ={
     home: async (req,res)=>{
         res.send("This is home page")
@@ -7,8 +10,15 @@ const authController ={
     },
     
     register : async (req,res)=>{
-        console.log(req.body)
-        res.send(req.body)
+        const {username , email , password ,phone}=req.body
+
+        const userExist = userModel.findOne({email:email})
+
+        if(userExist)
+            return  res.json({msg:"email exists already"})
+
+        
+        
     },
 
 }
