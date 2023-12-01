@@ -1,5 +1,6 @@
 
 const User = require("../models/userModel")
+const bcrypt = require("bcrypt")
 const userModel=require("../models/userModel")
 
 const authController ={
@@ -21,8 +22,9 @@ const authController ={
             if(userExist)
                return res.json({msg:"email exists already"})
             
-            await userModel.create({username,email,phone,password})
-            return res.json({msg:'user created successfully'})
+            const hashPass= await bcrypt.hash(password,10)
+            const userCreated=await userModel.create({username,email,phone,password:hashPass})
+            return res.json({msg:userCreated})
             
         }catch(err){
             console.log("ISE",err)
